@@ -1,0 +1,40 @@
+Write an algorithm that takes a string with repeated characters and compresses them, using a number to show how many times the repeated character has been compressed. For instance, aaa would be written as 3a.
+
+//single argument
+//it's a string
+//output is a string
+
+//recursive
+const compressRecursive = (str) => {
+  if (str.length === 1) return str;
+  let i = 0;
+  while (str[0] === str[i]) {
+        i++;
+  }
+  return (i !== 1 ? i + str[0] + compressRecursive(str.substr(i)) : str[0] + compressRecursive(str.substr(i)));
+}
+
+// doesn't work if the final character is a repeating character
+
+//nonrecursive
+const compressFunction = (str) => {
+  let finalArr = [];
+  const inputLength = str.length;
+  for (let i=0; i < inputLength; i++) {
+    let count=1;
+    while (i < inputLength -1 && str[i] === str[i+1]) {
+      count++;
+      i++;
+    }
+    if (count ===1) {
+      finalArr.push(str[i]);
+    }
+    else {
+            finalArr.push(count);
+      finalArr.push(str[i]);
+    }
+  }
+  return finalArr.join('');
+}
+
+// works fine but isn't recursive
